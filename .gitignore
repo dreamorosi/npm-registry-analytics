@@ -26,3 +26,10 @@ coverage
 
 # Visual Studio Code
 .vscode
+
+# Build directory
+build
+dist
+
+# Build artifacts
+.tgz

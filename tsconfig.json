@@ -7,7 +7,7 @@
     "module": "ESNext",
     "declaration": true,
     "declarationMap": true,
-    "outDir": "lib",
+    "outDir": "dist",
     "removeComments": false,
     "strict": true,
     "inlineSourceMap": true,
