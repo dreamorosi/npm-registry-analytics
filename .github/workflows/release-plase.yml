@@ -21,7 +21,6 @@ jobs:
           release-type: node
           package-name: npm-download-count-client
           prerelease: true
-          command: release-pr
           signoff: 'Andrea Amorosi <dreamorosi@gmail.com>'
           skip-labeling: true
           release-as: v0.1.0
