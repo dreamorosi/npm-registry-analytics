@@ -36,7 +36,7 @@ await client.getDailyDownloadsForLastMonth({
 });
 ```
 
-The client supports all the methods exposed by the [npm API](https://github.com/npm/registry/blob/master/docs/download-counts.md). Check out the [API documentation]() for a full list of available methods.
+The client supports all the methods exposed by the [npm API](https://github.com/npm/registry/blob/master/docs/download-counts.md). Check out the [API documentation](https://dreamorosi.github.io/npm-download-count-client/classes/NpmDownloadCountClient.html) for a full list of available methods.
 
 ## License
 
