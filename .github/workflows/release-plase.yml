@@ -1,0 +1,51 @@
+name: Update Release PR
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    environment: release
+    steps:
+      - name: Handle release PR
+        uses: google-github-actions/release-please-action@c078ea33917ab8cfa5300e48f4b7e6b16606aede # v3.7.8
+        with:
+          release-type: node
+          package-name: npm-download-count-client
+          prerelease: true
+          command: release-pr
+          signoff: 'Andrea Amorosi <dreamorosi@gmail.com>'
+      # The logic below handles the npm publication, it runs only if the release PR is merged
+      - name: Checkout code
+        if: ${{ steps.release.outputs.release_created }}
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+      - name: Setup NodeJS
+        if: ${{ steps.release.outputs.release_created }}
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+      - name: Cache node modules
+        if: ${{ steps.release.outputs.release_created }}
+        id: cache-node-modules
+        uses: actions/cache@69d9d449aced6a2ede0bc19182fadc3a0a42d2b0 # v3.2.6
+        with:
+          path: './node_modules'
+          # Use the combo between node version, name, and SHA-256 hash of the lock file as cache key so that
+          # if one of them changes the cache is invalidated/discarded
+          key: cache-node-modules-${{ hashFiles('./package-lock.json') }}
+      - name: Install dependencies
+        # We can skip the installation if there was a cache hit
+        if: ${{ steps.release.outputs.release_created && steps.cache-node-modules.outputs.cache-hit != 'true' }}
+        run: npm ci
+      - run: npm publish
+        if: ${{ steps.release.outputs.release_created }}"
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
