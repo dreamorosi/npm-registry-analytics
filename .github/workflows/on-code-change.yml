@@ -14,4 +14,4 @@ on:
 
 jobs:
   run-unit-tests:
-    uses: ./.github/workflows/reusable-run-linting-and-unit-tests.yml
+    uses: ./.github/workflows/reusable-lint-and-run-unit-tests.yml
