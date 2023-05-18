@@ -4,6 +4,42 @@ import { getDummyRequestService, addMockResponses } from '../helpers';
 import { NpmDownloadCountClient } from '../../src/NpmDownloadCountClient';
 
 describe('Class: NpmDownloadCountClient', () => {
+  describe('Method: getBetweenDates', () => {
+    it.each([
+      { start: '2023-05-01', end: '2023-05-15' },
+      { start: new Date('2023-05-01'), end: new Date('2023-05-15') },
+    ])('gets the download count for a package', async ({ start, end }) => {
+      // Prepare
+      const requestService = getDummyRequestService();
+      const expectedResponses = addMockResponses(
+        {
+          requestService,
+          startDate: start instanceof Date ? start : new Date(start),
+          delta: 14,
+          packages: ['@aws-lambda-powertools/logger'],
+        },
+        'point'
+      );
+      const client = new NpmDownloadCountClient({
+        customServices: {
+          requestService,
+        },
+      });
+
+      // Act
+      const response = await client.getBetweenDates({
+        packages: ['@aws-lambda-powertools/logger'],
+        start,
+        end,
+      });
+
+      // Assess
+      expect(response).toMatchResponses(expectedResponses);
+      expect(requestService.request).toHaveBeenCalledWith({
+        path: '/point/2023-5-1:2023-5-15/@aws-lambda-powertools/logger',
+      });
+    });
+  });
   describe('Method: getDailyDownloadsForLastMonth', () => {
     it('gets the download count for a package', async () => {
       // Prepare

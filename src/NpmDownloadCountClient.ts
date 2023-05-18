@@ -28,6 +28,7 @@ import type {
   GetStartAndEndDatesForWeekOptions,
   GetLastWeekDailyDownloadCountOptions,
   GetLastMonthDailyDownloadCountOptions,
+  GetBetweenDatesDownloadCountOptions,
 } from './types/NpmDownloadCountClient';
 
 /**
@@ -93,6 +94,50 @@ class NpmDownloadCountClient implements INpmDownloadCountClient {
   public constructor(config?: NpmDownloadCountClientConfig) {
     this.#requestService =
       config?.customServices?.requestService || new RequestService(config);
+  }
+
+  /**
+   * Get the download count for the given packages between the given dates.
+   *
+   * @example
+   * ```ts
+   * client.getBetweenDates({
+   *   packages: [
+   *     '@aws-lambda-powertools/logger',
+   *   ],
+   *   startDate: '2020-01-01',
+   *   endDate: '2020-01-15',
+   * });
+   * ```
+   *
+   * The response will be an array of objects, one for each
+   * package, with the following shape:
+   *
+   * @example
+   * ```ts
+   * {
+   *   package: '@aws-lambda-powertools/logger',
+   *   downloads: 1234,
+   *   start: '2020-01-01',
+   *   end: '2020-01-15',
+   * }
+   * ```
+   *
+   * @param options The options for getting the download count.
+   * @returns The download count for the given packages between the given dates.
+   */
+  public async getBetweenDates(
+    options: GetBetweenDatesDownloadCountOptions
+  ): Promise<NpmAPIPointResponse> {
+    const { packages, start, end } = options;
+    const paths = this.#makeRequestPaths({
+      packages,
+      startDate: start instanceof Date ? start : parseISO(start),
+      endDate: end instanceof Date ? end : parseISO(end),
+      requestType: 'point',
+    });
+
+    return await this.#request(paths, 'point');
   }
 
   /**

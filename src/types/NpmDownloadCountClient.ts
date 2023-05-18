@@ -4,6 +4,28 @@ import { NpmAPIPointResponseSchema } from '../schemas/NpmAPIPointResponse';
 import { NpmAPIRangeResponseSchema } from '../schemas/NpmAPIRangeResponse';
 import type { ZodType } from 'zod';
 
+type GetBetweenDatesDownloadCountOptions = {
+  /**
+   * The packages to get the download count for.
+   * @example ['@aws-lambda-powertools/logger']
+   */
+  packages: string[];
+  /**
+   * The start Date to use in the query.
+   * @example
+   * '2023-01-01'
+   * new Date('2023-01-01')
+   */
+  start: string | Date;
+  /**
+   * The end date to use in the query.
+   * @example
+   * '2023-01-01'
+   * new Date('2023-01-01')
+   */
+  end: string | Date;
+};
+
 /**
  * Options for getting the download count for the given packages on a given day.
  */
@@ -90,6 +112,39 @@ type NpmAPIResponse<Type extends RequestType> = Type extends 'point'
   : NpmAPIRangeResponse;
 
 interface NpmDownloadCountClient {
+  /**
+   * Get the download count for the given packages between the given dates.
+   *
+   * @example
+   * ```ts
+   * client.getBetweenDates({
+   *   packages: [
+   *     '@aws-lambda-powertools/logger',
+   *   ],
+   *   start: '2020-01-01',
+   *   end: '2020-01-15',
+   * });
+   * ```
+   *
+   * The response will be an array of objects, one for each
+   * package, with the following shape:
+   *
+   * @example
+   * ```ts
+   * {
+   *   package: '@aws-lambda-powertools/logger',
+   *   downloads: 1234,
+   *   start: '2020-01-01',
+   *   end: '2020-01-15',
+   * }
+   * ```
+   *
+   * @param options The options for getting the download count.
+   * @returns The download count for the given packages between the given dates.
+   */
+  getBetweenDates(
+    options: GetBetweenDatesDownloadCountOptions
+  ): Promise<NpmAPIPointResponse>;
   /**
    * Get the daily downlods for the given packages during the last 30 available days.
    *
@@ -667,4 +722,5 @@ export type {
   GetStartAndEndDatesForWeekOutput,
   GetLastWeekDailyDownloadCountOptions,
   GetLastMonthDailyDownloadCountOptions,
+  GetBetweenDatesDownloadCountOptions,
 };
