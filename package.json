@@ -7,7 +7,8 @@
         "build": "tsup",
         "lint": "eslint --ext .ts,.cjs --no-error-on-unmatched-pattern .",
         "lint-fix": "eslint --fix --ext .ts,.cjs --no-error-on-unmatched-pattern .",
-        "test": "vitest --run --coverage"
+        "test": "vitest --run --coverage",
+        "docs": "typedoc"
     },
     "type": "module",
     "keywords": [
@@ -62,6 +63,8 @@
         "lint-staged": "^13.1.2",
         "prettier": "^2.8.7",
         "tsup": "^6.7.0",
+        "typedoc": "^0.24.7",
+        "typedoc-plugin-missing-exports": "^2.0.0",
         "typescript": "^5.0.4",
         "vitest": "^0.31.0"
     },

@@ -92,18 +92,90 @@ type NpmAPIResponse<Type extends RequestType> = Type extends 'point'
 interface NpmDownloadCountClient {
   /**
    * Get the daily downlods for the given packages during the last 30 available days.
+   *
+   * @example
+   * ```ts
+   * client.getDailyDownloadsForLastMonth({
+   *   packages: [
+   *     '@aws-lambda-powertools/logger',
+   *   ],
+   * });
+   * ```
+   *
+   * The response will be an array of objects, one for each
+   * package, with the following shape:
+   *
+   * @example
+   * ```ts
+   * {
+   *   start: '2020-01-01',
+   *   end: '2020-01-31',
+   *   package: '@aws-lambda-powertools/logger',
+   *   downloads: [
+   *     {
+   *       downloads: 1234,
+   *       day: '2020-01-01',
+   *     },
+   *     // ... other days
+   *     {
+   *       downloads: 1234,
+   *       day: '2020-01-08',
+   *     },
+   *   ]
+   * }
+   * ```
+   *
+   * @param options The options for getting the daily download count.
+   * @returns The daily download count for the given packages during the last 30 available days.
    */
   getDailyDownloadsForLastMonth(
     options: GetLastMonthDailyDownloadCountOptions
   ): Promise<NpmAPIRangeResponse>;
   /**
    * Get the daily downlods for the given packages during the last 7 available days.
+   *
+   * @example
+   * ```ts
+   * client.getDailyDownloadsForLastWeek({
+   *   packages: [
+   *     '@aws-lambda-powertools/logger',
+   *   ],
+   * });
+   * ```
+   *
+   * The response will be an array of objects, one for each
+   * package, with the following shape:
+   *
+   * @example
+   * ```ts
+   * {
+   *   start: '2020-01-01',
+   *   end: '2020-01-08',
+   *   package: '@aws-lambda-powertools/logger',
+   *   downloads: [
+   *     {
+   *       downloads: 1234,
+   *       day: '2020-01-01',
+   *     },
+   *     // ... other days
+   *     {
+   *       downloads: 1234,
+   *       day: '2020-01-08',
+   *     },
+   *   ]
+   * }
+   * ```
+   *
+   * @param options The options for getting the daily download count.
+   * @returns The daily download count for the given packages during the last 7 available days.
    */
   getDailyDownloadsForLastWeek(
     options: GetLastWeekDailyDownloadCountOptions
   ): Promise<NpmAPIRangeResponse>;
   /**
    * Get the daily downlods for the given packages on a given month.
+   *
+   * @note This method is not yet implemented.
    */
   getDailyDownloadsForMonth(): Promise<void>;
   /**
@@ -223,6 +295,19 @@ interface NpmDownloadCountClient {
    * });
    * ```
    *
+   * The response will be an array of objects, one for each
+   * package, with the following shape:
+   *
+   * @example
+   * ```ts
+   * {
+   *   start: '2020-01-01',
+   *   end: '2020-01-01',
+   *   package: '@aws-lambda-powertools/logger',
+   *   downloads: 1234
+   * }
+   * ```
+   *
    * @param options - The options for getting the download count.
    * @returns The download count for the given packages on the last available day.
    */
@@ -242,6 +327,19 @@ interface NpmDownloadCountClient {
    *     '@aws-lambda-powertools/logger',
    *   ],
    * });
+   * ```
+   *
+   * The response will be an array of objects, one for each
+   * package, with the following shape:
+   *
+   * @example
+   * ```ts
+   * {
+   *   start: '2020-01-01',
+   *   end: '2020-01-01',
+   *   package: '@aws-lambda-powertools/logger',
+   *   downloads: 1234
+   * }
    * ```
    *
    * @param options - The options for getting the download count.
@@ -265,6 +363,19 @@ interface NpmDownloadCountClient {
    * });
    * ```
    *
+   * The response will be an array of objects, one for each
+   * package, with the following shape:
+   *
+   * @example
+   * ```ts
+   * {
+   *   start: '2020-01-01',
+   *   end: '2020-01-01',
+   *   package: '@aws-lambda-powertools/logger',
+   *   downloads: 1234
+   * }
+   * ```
+   *
    * @param options - The options for getting the download count.
    * @returns The download count for the given packages on the last 7 available days.
    */
@@ -273,6 +384,8 @@ interface NpmDownloadCountClient {
   ): Promise<NpmAPIPointResponse>;
   /**
    * Get the download count for the given packages on the given month.
+   *
+   * @note This method is not yet implemented.
    */
   getMonth(): Promise<void>;
   /**

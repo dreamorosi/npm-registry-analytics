@@ -33,3 +33,6 @@ dist
 
 # Build artifacts
 .tgz
+
+# Docs
+api

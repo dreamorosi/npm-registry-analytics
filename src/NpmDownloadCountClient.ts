@@ -60,7 +60,7 @@ import type {
  *   packages: [
  *     '@aws-lambda-powertools/logger',
  *   ],
- *   week: '2020-W1',
+ *   week: '2020W1',
  * });
  * // week that includes 2020-01-01
  * client.getWeek({
@@ -97,6 +97,41 @@ class NpmDownloadCountClient implements INpmDownloadCountClient {
 
   /**
    * Get the daily downlods for the given packages during the last 30 available days.
+   *
+   * @example
+   * ```ts
+   * client.getDailyDownloadsForLastMonth({
+   *   packages: [
+   *     '@aws-lambda-powertools/logger',
+   *   ],
+   * });
+   * ```
+   *
+   * The response will be an array of objects, one for each
+   * package, with the following shape:
+   *
+   * @example
+   * ```ts
+   * {
+   *   start: '2020-01-01',
+   *   end: '2020-01-31',
+   *   package: '@aws-lambda-powertools/logger',
+   *   downloads: [
+   *     {
+   *       downloads: 1234,
+   *       day: '2020-01-01',
+   *     },
+   *     // ... other days
+   *     {
+   *       downloads: 1234,
+   *       day: '2020-01-08',
+   *     },
+   *   ]
+   * }
+   * ```
+   *
+   * @param options The options for getting the daily download count.
+   * @returns The daily download count for the given packages during the last 30 available days.
    */
   public async getDailyDownloadsForLastMonth(
     options: GetLastMonthDailyDownloadCountOptions
@@ -113,6 +148,41 @@ class NpmDownloadCountClient implements INpmDownloadCountClient {
 
   /**
    * Get the daily downlods for the given packages during the last 7 available days.
+   *
+   * @example
+   * ```ts
+   * client.getDailyDownloadsForLastWeek({
+   *   packages: [
+   *     '@aws-lambda-powertools/logger',
+   *   ],
+   * });
+   * ```
+   *
+   * The response will be an array of objects, one for each
+   * package, with the following shape:
+   *
+   * @example
+   * ```ts
+   * {
+   *   start: '2020-01-01',
+   *   end: '2020-01-08',
+   *   package: '@aws-lambda-powertools/logger',
+   *   downloads: [
+   *     {
+   *       downloads: 1234,
+   *       day: '2020-01-01',
+   *     },
+   *     // ... other days
+   *     {
+   *       downloads: 1234,
+   *       day: '2020-01-08',
+   *     },
+   *   ]
+   * }
+   * ```
+   *
+   * @param options The options for getting the daily download count.
+   * @returns The daily download count for the given packages during the last 7 available days.
    */
   public async getDailyDownloadsForLastWeek(
     options: GetLastWeekDailyDownloadCountOptions
@@ -138,6 +208,72 @@ class NpmDownloadCountClient implements INpmDownloadCountClient {
 
   /**
    * Get the daily downlods for the given packages on a given week.
+   *
+   * You can use a week number (i.e. W01-W52), an ISO week (i.e. `2023W01`)
+   * or a date (i.e. 2020-01-01). In the latter case, the week will be
+   * calculated based on the date.
+   *
+   * By default, the week will start on Monday and end on Sunday, but you
+   * can change this by passing the `startOfWeek` option.
+   *
+   * @example
+   * ```ts
+   * // week 1 of the current year
+   * client.getDailyDownloadsForWeek({
+   *   packages: [
+   *     '@aws-lambda-powertools/logger',
+   *   ],
+   *   week: 'W1',
+   * });
+   * // week 1 of 2020
+   * client.getDailyDownloadsForWeek({
+   *   packages: [
+   *     '@aws-lambda-powertools/logger',
+   *   ],
+   *   week: '2020W1',
+   * });
+   * // week that includes 2020-01-01
+   * client.getDailyDownloadsForWeek({
+   *   packages: [
+   *     '@aws-lambda-powertools/logger',
+   *   ],
+   *   week: '2020-01-01',
+   * });
+   * // week that includes 2020-01-01, starting on Sunday
+   * client.getDailyDownloadsForWeek({
+   *   packages: [
+   *     '@aws-lambda-powertools/logger',
+   *   ],
+   *   week: '2020-01-01',
+   *   startOfWeek: 'sunday',
+   * });
+   * ```
+   *
+   * In all cases, the response will be an array of objects, one for each
+   * package, with the following shape:
+   *
+   * @example
+   * ```ts
+   * {
+   *   start: '2020-01-01',
+   *   end: '2020-01-08',
+   *   package: '@aws-lambda-powertools/logger',
+   *   downloads: [
+   *     {
+   *       downloads: 1234,
+   *       day: '2020-01-01',
+   *     },
+   *     // ... other days
+   *     {
+   *       downloads: 1234,
+   *       day: '2020-01-08',
+   *     },
+   *   ]
+   * }
+   * ```
+   *
+   * @param options The options for getting the daily download count.
+   * @returns The daily download count for the given packages on the given week.
    */
   public async getDailyDownloadsForWeek(
     options: GetWeekDailyDownloadCountOptions
@@ -214,6 +350,19 @@ class NpmDownloadCountClient implements INpmDownloadCountClient {
    * });
    * ```
    *
+   * The response will be an array of objects, one for each
+   * package, with the following shape:
+   *
+   * @example
+   * ```ts
+   * {
+   *   start: '2020-01-01',
+   *   end: '2020-01-01',
+   *   package: '@aws-lambda-powertools/logger',
+   *   downloads: 1234
+   * }
+   * ```
+   *
    * @param options - The options for getting the download count.
    * @returns The download count for the given packages on the last available day.
    */
@@ -245,6 +394,20 @@ class NpmDownloadCountClient implements INpmDownloadCountClient {
    * });
    * ```
    *
+   *
+   * The response will be an array of objects, one for each
+   * package, with the following shape:
+   *
+   * @example
+   * ```ts
+   * {
+   *   start: '2020-01-01',
+   *   end: '2020-01-01',
+   *   package: '@aws-lambda-powertools/logger',
+   *   downloads: 1234
+   * }
+   * ```
+   *
    * @param options - The options for getting the download count.
    * @returns The download count for the given packages on the last 30 available days.
    */
@@ -274,6 +437,19 @@ class NpmDownloadCountClient implements INpmDownloadCountClient {
    *     '@aws-lambda-powertools/logger',
    *   ],
    * });
+   * ```
+   *
+   * The response will be an array of objects, one for each
+   * package, with the following shape:
+   *
+   * @example
+   * ```ts
+   * {
+   *   start: '2020-01-01',
+   *   end: '2020-01-01',
+   *   package: '@aws-lambda-powertools/logger',
+   *   downloads: 1234
+   * }
    * ```
    *
    * @param options - The options for getting the download count.

@@ -1,0 +1,51 @@
+name: Rebuild Docs
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+      - name: Setup NodeJS
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+      - name: Cache node modules
+        id: cache-node-modules
+        uses: actions/cache@69d9d449aced6a2ede0bc19182fadc3a0a42d2b0 # v3.2.6
+        with:
+          path: './node_modules'
+          # Use the combo between node version, name, and SHA-256 hash of the lock file as cache key so that
+          # if one of them changes the cache is invalidated/discarded
+          key: cache-node-modules-${{ hashFiles('./package-lock.json') }}
+      - name: Install dependencies
+        # We can skip the installation if there was a cache hit
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: npm ci
+      - name: Build docs
+        run: npm run docs
+      - name: Setup Pages
+        uses: actions/configure-pages@f156874f8191504dae5b037505266ed5dda6c382 # v3.0.6
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@64bcae551a7b18bcb9a09042ddf1960979799187 # v1.0.8
+        with:
+          path: './api'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@af48cf94a42f2c634308b1c9dc0151830b6f190a # v2.0.1
