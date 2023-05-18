@@ -48,7 +48,7 @@ jobs:
         if: ${{ steps.release.outputs.release_created && steps.cache-node-modules.outputs.cache-hit != 'true' }}
         run: npm ci
       - name: Publish to npm
-        if: ${{ steps.release.outputs.release_created }}"
+        if: ${{ steps.release.outputs.release_created }}
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
