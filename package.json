@@ -1,6 +1,6 @@
 {
     "name": "npm-download-count-client",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "description": "An opinionated client for the npm package download counts API written in TypeScript",
     "scripts": {
         "init-environment": "husky install",
