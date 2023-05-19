@@ -16,13 +16,13 @@ jobs:
     environment: release
     steps:
       - name: Handle release PR
+        id: release
         uses: google-github-actions/release-please-action@c078ea33917ab8cfa5300e48f4b7e6b16606aede # v3.7.8
         with:
-          release-type: node
           package-name: npm-download-count-client
-          prerelease: true
           signoff: 'Andrea Amorosi <dreamorosi@gmail.com>'
           skip-labeling: true
+          command: manifest
       # The logic below handles the npm publication, it runs only if the release PR is merged
       - name: Checkout code
         if: ${{ steps.release.outputs.release_created }}
