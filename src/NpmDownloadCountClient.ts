@@ -578,7 +578,7 @@ class NpmDownloadCountClient implements INpmDownloadCountClient {
    * }
    * ```
    *
-   * @param options The options for getting the download count.
+   * @param options - The options for getting the download count.
    * @returns The download count for the given packages on the given week.
    */
   public async getWeek(
@@ -602,7 +602,7 @@ class NpmDownloadCountClient implements INpmDownloadCountClient {
   /**
    * Make requests to the npm API for the given paths.
    *
-   * @param options Options like the packages to get stats for and the date
+   * @param options - Options like the packages to get stats for and the date
    * @returns A list of stats for the given packages
    */
   async #request<Type extends RequestType>(
@@ -635,7 +635,7 @@ class NpmDownloadCountClient implements INpmDownloadCountClient {
    * Parses an object using the provided schema and throws an error if unable
    * to parse it or when the parsing/validation fails.
    *
-   * @param options Options for parsing, includes the schema and the object
+   * @param options - Options for parsing, includes the schema and the object
    * @returns The parsed object
    */
   #parseObjectWithSchema<SomeSchema extends ZodType>(
@@ -654,6 +654,7 @@ class NpmDownloadCountClient implements INpmDownloadCountClient {
   /**
    * Build the request paths for the given packages and dates range.
    *
+   * @param options - Options for creating the request paths
    * @returns A list of paths to request for the given packages
    */
   #makeRequestPaths(options: MakeRequestPathOptions): string[] {
@@ -680,7 +681,7 @@ class NpmDownloadCountClient implements INpmDownloadCountClient {
   /**
    * Get the start and end dates for the given week.
    *
-   * @param options Options for getting the start and end dates
+   * @param options - Options for getting the start and end dates
    * @returns The start and end dates for the given week
    */
   #getStartAndEndDatesForWeek(
