@@ -24,7 +24,6 @@ jobs:
           prerelease: true
           signoff: 'Andrea Amorosi <dreamorosi@gmail.com>'
           skip-labeling: true
-          command: manifest
       # The logic below handles the npm publication, it runs only if the release PR is merged
       - name: Checkout code
         if: ${{ steps.release.outputs.release_created }}
