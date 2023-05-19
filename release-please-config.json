@@ -3,7 +3,6 @@
     "release-type": "node",
     "draft": true,
     "draft-pull-request": true,
-    "changelog-type": "github",
     "prerelease": true,
     "include-component-in-tag": false,
     "include-v-in-tag": true,

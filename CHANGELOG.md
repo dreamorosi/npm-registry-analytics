@@ -1,10 +1,6 @@
 # Changelog
 
-## 0.2.1 (2023-05-19)
-
-**Full Changelog**: https://github.com/dreamorosi/npm-download-count-client/compare/v0.2.0...v0.2.1
-
-## [0.2.0](https://github.com/dreamorosi/npm-download-count-client/compare/v0.1.0...v0.2.0) (2023-05-19)
+## 0.2.0 (2023-05-18)
 
 
 ### Features
