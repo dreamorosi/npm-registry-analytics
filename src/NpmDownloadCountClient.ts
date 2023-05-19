@@ -6,6 +6,7 @@ import {
 } from 'date-fns';
 import { NpmAPIPointResponseSchema } from './schemas/NpmAPIPointResponse';
 import { NpmAPIRangeResponseSchema } from './schemas/NpmAPIRangeResponse';
+import { ValidationError } from './errors';
 import type { ZodType, ZodError } from 'zod';
 import type { RequestService as IRequestService } from './types/RequestService';
 import type {
@@ -645,9 +646,13 @@ class NpmDownloadCountClient implements INpmDownloadCountClient {
     try {
       return schema.parse(object);
     } catch (err) {
-      throw new Error(`Object shape is not valid.`, {
-        cause: (err as ZodError).errors,
-      });
+      throw new ValidationError(
+        `Object shape is not valid.`,
+        (err as ZodError).errors,
+        {
+          cause: err,
+        }
+      );
     }
   }
 
