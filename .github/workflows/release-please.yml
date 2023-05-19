@@ -21,6 +21,7 @@ jobs:
         with:
           release-type: node
           package-name: npm-download-count-client
+          prerelease: true
           signoff: 'Andrea Amorosi <dreamorosi@gmail.com>'
           skip-labeling: true
           command: manifest
