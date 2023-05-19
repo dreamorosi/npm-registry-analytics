@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/dreamorosi/npm-download-count-client/compare/v0.2.0...v0.3.0) (2023-05-19)
+
+
+### Features
+
+* added validation error ([35881d9](https://github.com/dreamorosi/npm-download-count-client/commit/35881d9eb064430e9d794df322afd6b0792b42de))
+
 ## 0.2.0 (2023-05-18)
 
 
