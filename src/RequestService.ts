@@ -47,7 +47,7 @@ class RequestService implements IRequestService {
    * retries for a number of times with a delay between each retry
    * before eventually throwing an error.
    *
-   * @param body The body to send to the API endpoint
+   * @param body - The body to send to the API endpoint
    * @returns The response from the API endpoint
    */
   public async request(options?: RequestOptions): Promise<unknown> {
@@ -107,7 +107,7 @@ class RequestService implements IRequestService {
    * Removes any undefined or null values, and convers numbers to strings. Strings are
    * encoded using encodeURI.
    *
-   * @param params An object of key value pairs to serialize as query parameters
+   * @param params - An object of key value pairs to serialize as query parameters
    * @returns An instance of URLSearchParams with the serialized parameters
    */
   #serializeQueryParams(params: Record<string, unknown>): URLSearchParams {
