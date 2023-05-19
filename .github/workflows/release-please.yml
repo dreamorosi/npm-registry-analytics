@@ -57,6 +57,9 @@ jobs:
           git remote add gh-token "https://${{ secrets.GITHUB_TOKEN }}@github.com/dreamorosi/npm-download-count-client.git"
           git tag v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }} || true
           git push --tags
+      - name: Build
+        if: ${{ steps.release.outputs.release_created }}
+        run: npm run build
       - name: Publish to npm
         if: ${{ steps.release.outputs.release_created }}
         run: npm publish --provenance --access public
