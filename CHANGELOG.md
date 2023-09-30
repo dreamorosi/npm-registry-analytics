@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.0.0](https://github.com/dreamorosi/npm-download-count-client/compare/v0.3.0...v1.0.0) (2023-09-30)
+
+
+### Features
+
+* add methods for month data ([6fb0f99](https://github.com/dreamorosi/npm-download-count-client/commit/6fb0f994a1c0d8535addc1c0552d492de3c9acb0))
+
+
+### Miscellaneous Chores
+
+* release 1.0.0 ([b7952e2](https://github.com/dreamorosi/npm-download-count-client/commit/b7952e247cb58bf79b0180bc0b4ce84fb4e89e46))
+
 ## [0.3.0](https://github.com/dreamorosi/npm-download-count-client/compare/v0.2.0...v0.3.0) (2023-05-19)
 
 
