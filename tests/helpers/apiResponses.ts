@@ -5,7 +5,7 @@ import type { RequestService } from '../../src/types/RequestService';
 import type {
   RequestType,
   NpmAPIResponse,
-} from '../../src/types/NpmRegistryDownloadCountClient';
+} from '../../src/types/NpmRegistryClient';
 
 type AddMockResponsesOptions = {
   requestService: RequestService;

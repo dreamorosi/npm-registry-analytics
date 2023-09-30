@@ -1,16 +1,16 @@
 import { randomInt } from 'node:crypto';
 import { describe, it, expect, vi } from 'vitest';
 import { getDummyRequestService, addMockResponses } from '../helpers';
-import { NpmRegistryDownloadCountClient } from '../../src/NpmRegistryDownloadCountClient';
+import { NpmRegistryClient } from '../../src/NpmRegistryClient';
 
-describe('Class: NpmRegistryDownloadCountClient', () => {
+describe('Class: NpmRegistryClient', () => {
   describe('Method: constructor', () => {
-    it('returns an instance of NpmRegistryDownloadCountClient', () => {
+    it('returns an instance of NpmRegistryClient', () => {
       // Act
-      const client = new NpmRegistryDownloadCountClient();
+      const client = new NpmRegistryClient();
 
       // Assess
-      expect(client).toBeInstanceOf(NpmRegistryDownloadCountClient);
+      expect(client).toBeInstanceOf(NpmRegistryClient);
     });
   });
   describe('Method: getBetweenDates', () => {
@@ -29,7 +29,7 @@ describe('Class: NpmRegistryDownloadCountClient', () => {
         },
         'point'
       );
-      const client = new NpmRegistryDownloadCountClient({
+      const client = new NpmRegistryClient({
         customServices: {
           requestService,
         },
@@ -62,7 +62,7 @@ describe('Class: NpmRegistryDownloadCountClient', () => {
         },
         'range'
       );
-      const client = new NpmRegistryDownloadCountClient({
+      const client = new NpmRegistryClient({
         customServices: {
           requestService,
         },
@@ -94,7 +94,7 @@ describe('Class: NpmRegistryDownloadCountClient', () => {
         },
         'range'
       );
-      const client = new NpmRegistryDownloadCountClient({
+      const client = new NpmRegistryClient({
         customServices: {
           requestService,
         },
@@ -125,7 +125,7 @@ describe('Class: NpmRegistryDownloadCountClient', () => {
         },
         'range'
       );
-      const client = new NpmRegistryDownloadCountClient({
+      const client = new NpmRegistryClient({
         customServices: {
           requestService,
         },
@@ -157,7 +157,7 @@ describe('Class: NpmRegistryDownloadCountClient', () => {
         },
         'range'
       );
-      const client = new NpmRegistryDownloadCountClient({
+      const client = new NpmRegistryClient({
         customServices: {
           requestService,
         },
@@ -190,7 +190,7 @@ describe('Class: NpmRegistryDownloadCountClient', () => {
           },
           'range'
         );
-        const client = new NpmRegistryDownloadCountClient({
+        const client = new NpmRegistryClient({
           customServices: {
             requestService,
           },
@@ -225,7 +225,7 @@ describe('Class: NpmRegistryDownloadCountClient', () => {
           },
           'range'
         );
-        const client = new NpmRegistryDownloadCountClient({
+        const client = new NpmRegistryClient({
           customServices: {
             requestService,
           },
@@ -265,7 +265,7 @@ describe('Class: NpmRegistryDownloadCountClient', () => {
           },
           'range'
         );
-        const client = new NpmRegistryDownloadCountClient({
+        const client = new NpmRegistryClient({
           customServices: {
             requestService,
           },
@@ -299,7 +299,7 @@ describe('Class: NpmRegistryDownloadCountClient', () => {
         },
         'point'
       );
-      const client = new NpmRegistryDownloadCountClient({
+      const client = new NpmRegistryClient({
         customServices: {
           requestService,
         },
@@ -332,7 +332,7 @@ describe('Class: NpmRegistryDownloadCountClient', () => {
         },
         'point'
       );
-      const client = new NpmRegistryDownloadCountClient({
+      const client = new NpmRegistryClient({
         customServices: {
           requestService,
         },
@@ -358,7 +358,7 @@ describe('Class: NpmRegistryDownloadCountClient', () => {
         start: '2023-05-08',
         end: '2023-05-14',
       });
-      const client = new NpmRegistryDownloadCountClient({
+      const client = new NpmRegistryClient({
         customServices: {
           requestService,
         },
@@ -386,7 +386,7 @@ describe('Class: NpmRegistryDownloadCountClient', () => {
         },
         'point'
       );
-      const client = new NpmRegistryDownloadCountClient({
+      const client = new NpmRegistryClient({
         customServices: {
           requestService,
         },
@@ -418,7 +418,7 @@ describe('Class: NpmRegistryDownloadCountClient', () => {
         },
         'point'
       );
-      const client = new NpmRegistryDownloadCountClient({
+      const client = new NpmRegistryClient({
         customServices: {
           requestService,
         },
@@ -449,7 +449,7 @@ describe('Class: NpmRegistryDownloadCountClient', () => {
         },
         'point'
       );
-      const client = new NpmRegistryDownloadCountClient({
+      const client = new NpmRegistryClient({
         customServices: {
           requestService,
         },
@@ -481,7 +481,7 @@ describe('Class: NpmRegistryDownloadCountClient', () => {
         },
         'point'
       );
-      const client = new NpmRegistryDownloadCountClient({
+      const client = new NpmRegistryClient({
         customServices: {
           requestService,
         },
@@ -512,7 +512,7 @@ describe('Class: NpmRegistryDownloadCountClient', () => {
         },
         'point'
       );
-      const client = new NpmRegistryDownloadCountClient({
+      const client = new NpmRegistryClient({
         customServices: {
           requestService,
         },
@@ -544,7 +544,7 @@ describe('Class: NpmRegistryDownloadCountClient', () => {
         },
         'point'
       );
-      const client = new NpmRegistryDownloadCountClient({
+      const client = new NpmRegistryClient({
         customServices: {
           requestService,
         },
@@ -577,7 +577,7 @@ describe('Class: NpmRegistryDownloadCountClient', () => {
           },
           'point'
         );
-        const client = new NpmRegistryDownloadCountClient({
+        const client = new NpmRegistryClient({
           customServices: {
             requestService,
           },
@@ -612,7 +612,7 @@ describe('Class: NpmRegistryDownloadCountClient', () => {
           },
           'point'
         );
-        const client = new NpmRegistryDownloadCountClient({
+        const client = new NpmRegistryClient({
           customServices: {
             requestService,
           },
@@ -652,7 +652,7 @@ describe('Class: NpmRegistryDownloadCountClient', () => {
           },
           'point'
         );
-        const client = new NpmRegistryDownloadCountClient({
+        const client = new NpmRegistryClient({
           customServices: {
             requestService,
           },

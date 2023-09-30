@@ -12,8 +12,8 @@ import { ValidationError } from './errors';
 import type { ZodType, ZodError } from 'zod';
 import type { RequestService as IRequestService } from './types/RequestService';
 import type {
-  NpmRegistryDownloadCountClient as INpmRegistryDownloadCountClient,
-  NpmRegistryDownloadCountClientConfig,
+  NpmRegistryClient as INpmRegistryClient,
+  NpmRegistryClientConfig,
   GetDayDownloadCountOptions,
   GetWeekDownloadCountOptions,
   GetLastDayDownloadCountOptions,
@@ -35,7 +35,7 @@ import type {
   GetStartAndEndDatesForMonthOptions,
   GetMonthDailyDownloadCountOptions,
   GetMonthDownloadCountOptions,
-} from './types/NpmRegistryDownloadCountClient';
+} from './types/NpmRegistryClient';
 
 /**
  * A client for the npm package download API.
@@ -90,16 +90,14 @@ import type {
  *
  * @see [API Documentation](https://github.com/npm/registry/blob/master/docs/download-counts.md)
  */
-class NpmRegistryDownloadCountClient
-  implements INpmRegistryDownloadCountClient
-{
+class NpmRegistryClient implements INpmRegistryClient {
   /**
    * The request service which is used to make requests to the API
    * @default new RequestService()
    */
   #requestService: IRequestService;
 
-  public constructor(config?: NpmRegistryDownloadCountClientConfig) {
+  public constructor(config?: NpmRegistryClientConfig) {
     this.#requestService =
       config?.customServices?.requestService || new RequestService(config);
   }
@@ -853,4 +851,4 @@ class NpmRegistryDownloadCountClient
   }
 }
 
-export { NpmRegistryDownloadCountClient };
+export { NpmRegistryClient };

@@ -1,7 +1,7 @@
 import type {
   NpmAPIPointResponse,
   NpmAPIRangeResponse,
-} from '../../../src/types/NpmRegistryDownloadCountClient';
+} from '../../../src/types/NpmRegistryClient';
 
 interface CustomMatchers<R = unknown> {
   toMatchResponses(response: NpmAPIPointResponse | NpmAPIRangeResponse): R;

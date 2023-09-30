@@ -1,7 +1,7 @@
 module.exports = {
   out: 'api',
   exclude: ['**/node_modules/**', '**/*.test.ts', '**/*.json'],
-  name: 'npm-registry-download-count',
+  name: 'npm-registry-analytics',
   excludePrivate: true,
   excludeInternal: true,
   readme: './README.md',

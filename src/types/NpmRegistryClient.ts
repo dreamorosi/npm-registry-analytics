@@ -134,7 +134,7 @@ type NpmAPIResponse<Type extends RequestType> = Type extends 'point'
   ? NpmAPIPointResponse
   : NpmAPIRangeResponse;
 
-interface NpmRegistryDownloadCountClient {
+interface NpmRegistryClient {
   /**
    * Get the download count for the given packages between the given dates.
    *
@@ -609,9 +609,9 @@ interface NpmRegistryDownloadCountClient {
 }
 
 /**
- * The configuration options for the NpmRegistryDownloadCountClient
+ * The configuration options for the NpmRegistryClient
  */
-type NpmRegistryDownloadCountClientConfig = {
+type NpmRegistryClientConfig = {
   /**
    * The hostname to use for all requests
    * @default 'api.npmjs.org'
@@ -816,8 +816,8 @@ type GetStartAndEndDatesForMonthOptions = {
 };
 
 export type {
-  NpmRegistryDownloadCountClient,
-  NpmRegistryDownloadCountClientConfig,
+  NpmRegistryClient,
+  NpmRegistryClientConfig,
   RequestRetry,
   GetDayDownloadCountOptions,
   GetWeekDownloadCountOptions,

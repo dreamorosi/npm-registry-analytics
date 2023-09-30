@@ -2,7 +2,7 @@ import { expect } from 'vitest';
 import type {
   NpmAPIPointResponse,
   NpmAPIRangeResponse,
-} from '../../src/types/NpmRegistryDownloadCountClient';
+} from '../../src/types/NpmRegistryClient';
 
 expect.extend({
   /**

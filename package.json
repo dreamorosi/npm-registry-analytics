@@ -1,5 +1,5 @@
 {
-    "name": "npm-registry-download-count",
+    "name": "npm-registry-analytics",
     "version": "1.0.0",
     "description": "An opinionated client for the npm package download counts API written in TypeScript",
     "scripts": {

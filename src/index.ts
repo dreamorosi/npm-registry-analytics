@@ -1,1 +1,1 @@
-export * from './NpmRegistryDownloadCountClient';
+export * from './NpmRegistryClient';
