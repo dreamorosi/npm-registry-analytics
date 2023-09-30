@@ -23,7 +23,6 @@ jobs:
           package-name: npm-download-count-client
           signoff: 'Andrea Amorosi <dreamorosi@gmail.com>'
           skip-labeling: true
-          prerelease: true
           command: manifest
           changelog-types: '[{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"refactor","section":"Miscellaneous","hidden":false},{"type":"docs","section":"Docs","hidden":false}]'
       # The logic below handles the npm publication, it runs only if the release PR is merged
