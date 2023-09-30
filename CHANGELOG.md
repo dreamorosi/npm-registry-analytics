@@ -1,12 +1,5 @@
 # Changelog
 
-## [1.0.0](https://github.com/dreamorosi/npm-registry-analytics/compare/v1.0.0...v1.0.0) (2023-09-30)
-
-
-### Miscellaneous Chores
-
-* release 1.0.0 ([64a5e0b](https://github.com/dreamorosi/npm-registry-analytics/commit/64a5e0b24eb83f8d906616361dbaeb9c8a04966c))
-
 ## [0.3.0](https://github.com/dreamorosi/npm-registry-analytics/compare/v0.2.0...v0.3.0) (2023-05-19)
 
 

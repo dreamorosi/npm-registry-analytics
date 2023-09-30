@@ -75,5 +75,13 @@
         "date-fns": "^2.30.0",
         "undici": "^5.25.2",
         "zod": "^3.22.2"
-    }
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/dreamorosi/npm-registry-analytics.git"
+    },
+    "bugs": {
+        "url": "https://github.com/dreamorosi/npm-registry-analytics/issues"
+    },
+    "homepage": "https://github.com/dreamorosi/npm-registry-analytics#readme"
 }
