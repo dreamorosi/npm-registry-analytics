@@ -54,8 +54,8 @@ In order to contribute to this project you will need Node.js 18.x or later - ins
 Clone the repository and install dependencies:
 
 ```bash
-git clone git@github.com:dreamorosi/npm-download-count-client.git
-cd npm-download-count-client
+git clone git@github.com:dreamorosi/npm-registry-download-count.git
+cd npm-registry-download-count
 npm ci
 npm run init-environment
 ```

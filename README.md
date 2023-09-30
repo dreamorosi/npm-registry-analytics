@@ -1,20 +1,20 @@
-# npm-download-count-client
+# npm-registry-download-count
 
 An opinionated client for the npm package download counts API written in TypeScript.
 
 ## Install
 
 ```bash
-npm i npm-download-count-client@latest
+npm i npm-registry-download-count@latest
 ```
 
 ## Usage
 
 ```typescript
-import { NpmDownloadCountClient } from 'npm-download-count-client';
+import { NpmRegistryDownloadCountClient } from 'npm-registry-download-count';
 
 // Create a new client
-const client = new NpmDownloadCountClient();
+const client = new NpmRegistryDownloadCountClient();
 
 // get download count for a package on a specific day
 await client.getDay({
@@ -36,7 +36,7 @@ await client.getDailyDownloadsForLastMonth({
 });
 ```
 
-The client supports all the methods exposed by the [npm API](https://github.com/npm/registry/blob/master/docs/download-counts.md). Check out the [API documentation](https://dreamorosi.github.io/npm-download-count-client/classes/NpmDownloadCountClient.html) for a full list of available methods.
+The client supports all the methods exposed by the [npm API](https://github.com/npm/registry/blob/master/docs/download-counts.md). Check out the [API documentation](https://dreamorosi.github.io/npm-registry-download-count/classes/NpmRegistryDownloadCountClient.html) for a full list of available methods.
 
 ## License
 

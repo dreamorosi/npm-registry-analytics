@@ -1,8 +1,8 @@
 import type { BodyInit } from 'undici';
 import type {
-  NpmDownloadCountClientConfig,
+  NpmRegistryDownloadCountClientConfig,
   RequestRetry,
-} from './NpmDownloadCountClient';
+} from './NpmRegistryDownloadCountClient';
 
 /**
  * List of HTTP methods that can be used in a request.
@@ -53,7 +53,7 @@ interface RequestService {
  * Configs for the request service
  */
 interface RequestServiceConfig
-  extends Omit<NpmDownloadCountClientConfig, 'customServices'> {
+  extends Omit<NpmRegistryDownloadCountClientConfig, 'customServices'> {
   /**
    * The configuration options for retrying a request if it fails.
    * By default, the request will be retried 3 times with a delay of 1 second before

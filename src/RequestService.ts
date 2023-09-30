@@ -1,5 +1,5 @@
 import { fetch, setGlobalOrigin } from 'undici';
-import type { RequestRetry } from './types/NpmDownloadCountClient';
+import type { RequestRetry } from './types/NpmRegistryDownloadCountClient';
 import type {
   RequestService as IRequestService,
   RequestOptions,

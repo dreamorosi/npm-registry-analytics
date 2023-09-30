@@ -1,5 +1,5 @@
 {
-    "name": "npm-download-count-client",
+    "name": "npm-registry-download-count",
     "version": "1.0.0",
     "description": "An opinionated client for the npm package download counts API written in TypeScript",
     "scripts": {
@@ -14,9 +14,12 @@
     "keywords": [
         "npm",
         "ts",
-        "typescript",
+        "downloads",
+        "download",
+        "registry",
         "api",
-        "client"
+        "client",
+        "count"
     ],
     "author": {
         "name": "Andrea Amorosi",
