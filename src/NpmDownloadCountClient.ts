@@ -3,6 +3,8 @@ import {
   parseISO,
   startOfWeek as getStartOfWeek,
   endOfWeek as getEndOfWeek,
+  startOfMonth as getStartOfMonth,
+  endOfMonth as getEndOfMonth,
 } from 'date-fns';
 import { NpmAPIPointResponseSchema } from './schemas/NpmAPIPointResponse';
 import { NpmAPIRangeResponseSchema } from './schemas/NpmAPIRangeResponse';
@@ -30,6 +32,9 @@ import type {
   GetLastWeekDailyDownloadCountOptions,
   GetLastMonthDailyDownloadCountOptions,
   GetBetweenDatesDownloadCountOptions,
+  GetStartAndEndDatesForMonthOptions,
+  GetMonthDailyDownloadCountOptions,
+  GetMonthDownloadCountOptions,
 } from './types/NpmDownloadCountClient';
 
 /**
@@ -246,10 +251,68 @@ class NpmDownloadCountClient implements INpmDownloadCountClient {
   /**
    * Get the daily downlods for the given packages on a given month.
    *
-   * @note This method is not yet implemented.
+   * You can use a month number (i.e. 01-12), an ISO week (i.e. `2023-01`).
+   *
+   * @example
+   * ```ts
+   * // month 1 of the current year
+   * client.getDailyDownloadsForWeek({
+   *   packages: [
+   *     '@aws-lambda-powertools/logger',
+   *   ],
+   *   week: '01',
+   * });
+   * // month 1 of 2020
+   * client.getDailyDownloadsForWeek({
+   *   packages: [
+   *     '@aws-lambda-powertools/logger',
+   *   ],
+   *   week: '2020-01',
+   * });
+   * ```
+   *
+   * In all cases, the response will be an array of objects, one for each
+   * package, with the following shape:
+   *
+   * @example
+   * ```ts
+   * {
+   *   start: '2020-01-01',
+   *   end: '2020-01-31',
+   *   package: '@aws-lambda-powertools/logger',
+   *   downloads: [
+   *     {
+   *       downloads: 1234,
+   *       day: '2020-01-01',
+   *     },
+   *     // ... other days
+   *     {
+   *       downloads: 1234,
+   *       day: '2020-01-31',
+   *     },
+   *   ]
+   * }
+   * ```
+   *
+   * @param options The options for getting the daily download count.
+   * @returns The daily download count for the given packages on the given month.
    */
-  public async getDailyDownloadsForMonth(): Promise<void> {
-    throw new Error('Method not implemented.');
+  public async getDailyDownloadsForMonth(
+    options: GetMonthDailyDownloadCountOptions
+  ): Promise<NpmAPIRangeResponse> {
+    const { packages, month } = options;
+    const { startDate, endDate } = this.#getStartAndEndDatesForMonth({
+      month,
+    });
+
+    const paths = this.#makeRequestPaths({
+      packages,
+      startDate,
+      endDate,
+      requestType: 'range',
+    });
+
+    return await this.#request(paths, 'range');
   }
 
   /**
@@ -269,14 +332,14 @@ class NpmDownloadCountClient implements INpmDownloadCountClient {
    *   packages: [
    *     '@aws-lambda-powertools/logger',
    *   ],
-   *   week: 'W1',
+   *   week: 'W01',
    * });
    * // week 1 of 2020
    * client.getDailyDownloadsForWeek({
    *   packages: [
    *     '@aws-lambda-powertools/logger',
    *   ],
-   *   week: '2020W1',
+   *   week: '2020W01',
    * });
    * // week that includes 2020-01-01
    * client.getDailyDownloadsForWeek({
@@ -517,10 +580,57 @@ class NpmDownloadCountClient implements INpmDownloadCountClient {
   /**
    * Get the download count for the given packages on the given month.
    *
-   * @note This method is not yet implemented.
+   * You can use a month number (i.e. 01-12), an ISO week (i.e. `2023-01`).
+   *
+   * @example
+   * ```ts
+   * // month 1 of the current year
+   * client.getMonth({
+   *   packages: [
+   *     '@aws-lambda-powertools/logger',
+   *   ],
+   *   month: '01',
+   * });
+   * // month 1 of 2020
+   * client.getMonth({
+   *   packages: [
+   *     '@aws-lambda-powertools/logger',
+   *   ],
+   *   month: '2020-01',
+   * });
+   * ```
+   *
+   * In all cases, the response will be an array of objects, one for each
+   * package, with the following shape:
+   *
+   * @example
+   * ```ts
+   * {
+   *   downloads: 1234;
+   *   start: '2020-01-01';
+   *   end: '2020-01-31';
+   *   package: '@aws-lambda-powertools/logger';
+   * }
+   * ```
+   *
+   * @param options The options for getting the download count.
+   * @returns The download count for the given packages on the given month.
    */
-  public async getMonth(): Promise<void> {
-    throw new Error('Method not implemented.');
+  public async getMonth(
+    options: GetMonthDownloadCountOptions
+  ): Promise<NpmAPIPointResponse> {
+    const { packages, month } = options;
+    const { startDate, endDate } = this.#getStartAndEndDatesForMonth({
+      month,
+    });
+    const paths = this.#makeRequestPaths({
+      packages,
+      startDate,
+      endDate,
+      requestType: 'point',
+    });
+
+    return await this.#request(paths, 'point');
   }
 
   /**
@@ -708,6 +818,34 @@ class NpmDownloadCountClient implements INpmDownloadCountClient {
     const endDate = getEndOfWeek(weekDate, {
       weekStartsOn: startOfWeek === 'sunday' ? 0 : 1,
     });
+
+    return { startDate, endDate };
+  }
+
+  /**
+   * Get the start and end dates for the given month
+   *
+   * @param options - Options for getting the start and end dates
+   * @returns The start and end dates for the given month
+   */
+  #getStartAndEndDatesForMonth(
+    options: GetStartAndEndDatesForMonthOptions
+  ): GetStartAndEndDatesForWeekOutput {
+    const { month } = options;
+    let monthDate: Date;
+    if (
+      month.toUpperCase().startsWith('0') ||
+      month.toUpperCase().startsWith('1')
+    ) {
+      const currentYear = new Date().getFullYear();
+      monthDate = parseISO(
+        `${currentYear}-${month.length === 1 ? '0' : ''}${month}`
+      );
+    } else {
+      monthDate = parseISO(month);
+    }
+    const startDate = getStartOfMonth(monthDate);
+    const endDate = getEndOfMonth(monthDate);
 
     return { startDate, endDate };
   }

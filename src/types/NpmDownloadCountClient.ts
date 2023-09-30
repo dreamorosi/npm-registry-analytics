@@ -68,6 +68,24 @@ type GetWeekDownloadCountOptions = {
 };
 
 /**
+ * Options for getting the download count for the given packages on a given month.
+ */
+type GetMonthDownloadCountOptions = {
+  /**
+   * The packages to get the download count for.
+   * @example ['@aws-lambda-powertools/logger']
+   */
+  packages: string[];
+  /**
+   * The week to get the download count for.
+   * @example
+   * '2023M01'
+   * 'M01'
+   */
+  month: string;
+};
+
+/**
  * Options for getting the download count for the given packages on a given week.
  */
 type GetWeekDailyDownloadCountOptions = GetWeekDownloadCountOptions;
@@ -87,6 +105,11 @@ type GetLastDayDownloadCountOptions = {
  * Options for getting the download count for the given packages in the last 7 available days.
  */
 type GetLastWeekDownloadCountOptions = GetLastDayDownloadCountOptions;
+
+/**
+ * Options for getting the download count for the given packages on a given week.
+ */
+type GetMonthDailyDownloadCountOptions = GetMonthDownloadCountOptions;
 
 /**
  * Options for getting the download count for the given packages in the last 30 available days.
@@ -230,9 +253,55 @@ interface NpmDownloadCountClient {
   /**
    * Get the daily downlods for the given packages on a given month.
    *
-   * @note This method is not yet implemented.
+   * You can use a month number (i.e. 01-12), an ISO week (i.e. `2023-01`).
+   *
+   * @example
+   * ```ts
+   * // month 1 of the current year
+   * client.getDailyDownloadsForWeek({
+   *   packages: [
+   *     '@aws-lambda-powertools/logger',
+   *   ],
+   *   week: '01',
+   * });
+   * // month 1 of 2020
+   * client.getDailyDownloadsForWeek({
+   *   packages: [
+   *     '@aws-lambda-powertools/logger',
+   *   ],
+   *   week: '2020-01',
+   * });
+   * ```
+   *
+   * In all cases, the response will be an array of objects, one for each
+   * package, with the following shape:
+   *
+   * @example
+   * ```ts
+   * {
+   *   start: '2020-01-01',
+   *   end: '2020-01-31',
+   *   package: '@aws-lambda-powertools/logger',
+   *   downloads: [
+   *     {
+   *       downloads: 1234,
+   *       day: '2020-01-01',
+   *     },
+   *     // ... other days
+   *     {
+   *       downloads: 1234,
+   *       day: '2020-01-31',
+   *     },
+   *   ]
+   * }
+   * ```
+   *
+   * @param options The options for getting the daily download count.
+   * @returns The daily download count for the given packages on the given month.
    */
-  getDailyDownloadsForMonth(): Promise<void>;
+  getDailyDownloadsForMonth(
+    options: GetMonthDailyDownloadCountOptions
+  ): Promise<NpmAPIRangeResponse>;
   /**
    * Get the daily downlods for the given packages on a given week.
    *
@@ -250,7 +319,7 @@ interface NpmDownloadCountClient {
    *   packages: [
    *     '@aws-lambda-powertools/logger',
    *   ],
-   *   week: 'W1',
+   *   week: 'W01',
    * });
    * // week 1 of 2020
    * client.getDailyDownloadsForWeek({
@@ -440,9 +509,43 @@ interface NpmDownloadCountClient {
   /**
    * Get the download count for the given packages on the given month.
    *
-   * @note This method is not yet implemented.
+   * You can use a month number (i.e. 01-12), an ISO week (i.e. `2023-01`).
+   *
+   * @example
+   * ```ts
+   * // month 1 of the current year
+   * client.getMonth({
+   *   packages: [
+   *     '@aws-lambda-powertools/logger',
+   *   ],
+   *   month: '01',
+   * });
+   * // month 1 of 2020
+   * client.getMonth({
+   *   packages: [
+   *     '@aws-lambda-powertools/logger',
+   *   ],
+   *   month: '2020-01',
+   * });
+   * ```
+   *
+   * In all cases, the response will be an array of objects, one for each
+   * package, with the following shape:
+   *
+   * @example
+   * ```ts
+   * {
+   *   downloads: 1234;
+   *   start: '2020-01-01';
+   *   end: '2020-01-31';
+   *   package: '@aws-lambda-powertools/logger';
+   * }
+   * ```
+   *
+   * @param options The options for getting the download count.
+   * @returns The download count for the given packages on the given month.
    */
-  getMonth(): Promise<void>;
+  getMonth(options: GetMonthDownloadCountOptions): Promise<NpmAPIPointResponse>;
   /**
    * Get the download count for the given packages on a given week.
    *
@@ -675,7 +778,7 @@ type ParseObjectOutput<T extends ZodType> = z.infer<T>;
 type GetStartAndEndDatesForWeekOptions = {
   /**
    * The week to get the start and end dates for
-   * @example '2020W1'
+   * @example '2020W01'
    */
   week: GetWeekDownloadCountOptions['week'];
   /**
@@ -701,6 +804,17 @@ type GetStartAndEndDatesForWeekOutput = {
   endDate: Date;
 };
 
+/**
+ * The options to use when getting the download count for a month
+ */
+type GetStartAndEndDatesForMonthOptions = {
+  /**
+   * The week to get the start and end dates for
+   * @example '2020-01' or '01'
+   */
+  month: GetMonthDownloadCountOptions['month'];
+};
+
 export type {
   NpmDownloadCountClient,
   NpmDownloadCountClientConfig,
@@ -723,4 +837,7 @@ export type {
   GetLastWeekDailyDownloadCountOptions,
   GetLastMonthDailyDownloadCountOptions,
   GetBetweenDatesDownloadCountOptions,
+  GetStartAndEndDatesForMonthOptions,
+  GetMonthDailyDownloadCountOptions,
+  GetMonthDownloadCountOptions,
 };

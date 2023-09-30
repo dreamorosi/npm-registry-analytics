@@ -65,7 +65,7 @@ describe('Class: RequestService', () => {
         expectedQs: '?foo=bar%40&baz=1',
       },
       {
-        queryParams: { foo: new Date(2021, 0, 1) },
+        queryParams: { foo: new Date('2021-01-01') },
         expectedQs: '?foo=2021-01-01',
       },
     ])(

@@ -4,6 +4,15 @@ import { getDummyRequestService, addMockResponses } from '../helpers';
 import { NpmDownloadCountClient } from '../../src/NpmDownloadCountClient';
 
 describe('Class: NpmDownloadCountClient', () => {
+  describe('Method: constructor', () => {
+    it('returns an instance of NpmDownloadCountClient', () => {
+      // Act
+      const client = new NpmDownloadCountClient();
+
+      // Assess
+      expect(client).toBeInstanceOf(NpmDownloadCountClient);
+    });
+  });
   describe('Method: getBetweenDates', () => {
     it.each([
       { start: '2023-05-01', end: '2023-05-15' },
@@ -167,15 +176,39 @@ describe('Class: NpmDownloadCountClient', () => {
     });
   });
   describe('Method: getDailyDownloadsForMonth', () => {
-    it('throws because it is not implemented', async () => {
-      // Prepare
-      const client = new NpmDownloadCountClient();
+    it.each(['2023-01', '01', '1'])(
+      'gets the download count for a package',
+      async (month) => {
+        // Prepare
+        const requestService = getDummyRequestService();
+        const expectedResponses = addMockResponses(
+          {
+            requestService,
+            startDate: new Date('2023-01-01'),
+            delta: 31,
+            packages: ['@aws-lambda-powertools/logger'],
+          },
+          'range'
+        );
+        const client = new NpmDownloadCountClient({
+          customServices: {
+            requestService,
+          },
+        });
 
-      // Act & Assess
-      await expect(client.getDailyDownloadsForMonth()).rejects.toThrow(
-        'Method not implemented'
-      );
-    });
+        // Act
+        const response = await client.getDailyDownloadsForMonth({
+          packages: ['@aws-lambda-powertools/logger'],
+          month,
+        });
+
+        // Assess
+        expect(response).toMatchResponses(expectedResponses);
+        expect(requestService.request).toHaveBeenCalledWith({
+          path: '/range/2023-1-1:2023-1-31/@aws-lambda-powertools/logger',
+        });
+      }
+    );
   });
   describe('Method: getDailyDownloadsForWeek', () => {
     it.each(['2023-05-15', new Date('2023-05-15'), '2023W20', 'W20'])(
@@ -530,13 +563,39 @@ describe('Class: NpmDownloadCountClient', () => {
     });
   });
   describe('Method: getMonth', () => {
-    it('throws because it is not implemented', async () => {
-      // Prepare
-      const client = new NpmDownloadCountClient();
+    it.each(['2023-01', '01', '1'])(
+      'gets the download count for a package',
+      async (month) => {
+        // Prepare
+        const requestService = getDummyRequestService();
+        const expectedResponses = addMockResponses(
+          {
+            requestService,
+            startDate: new Date('2023-01-01'),
+            delta: 31,
+            packages: ['@aws-lambda-powertools/logger'],
+          },
+          'point'
+        );
+        const client = new NpmDownloadCountClient({
+          customServices: {
+            requestService,
+          },
+        });
 
-      // Act & Assess
-      await expect(client.getMonth()).rejects.toThrow('Method not implemented');
-    });
+        // Act
+        const response = await client.getMonth({
+          packages: ['@aws-lambda-powertools/logger'],
+          month,
+        });
+
+        // Assess
+        expect(response).toMatchResponses(expectedResponses);
+        expect(requestService.request).toHaveBeenCalledWith({
+          path: '/point/2023-1-1:2023-1-31/@aws-lambda-powertools/logger',
+        });
+      }
+    );
   });
   describe('Method: getWeek', () => {
     it.each(['2023-05-15', new Date('2023-05-15'), '2023W20', 'W20'])(
